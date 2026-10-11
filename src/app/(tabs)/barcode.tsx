@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '@/components/Header';
 import { CameraView, useCameraPermissions } from 'expo-camera'
+import { useRouter } from 'expo-router';
 
 export default function Barcode() {
   const [ cameraPermission, requestCameraPermission ] = useCameraPermissions();
   const [ scanned, setScanned ] = useState(false);
   const [ codeStr, setCodeStr ] = useState<string | null>(null);
+  const router = useRouter();
 
   if (!cameraPermission) {
     return <View style=""><Text className="text-white font-syne text-sm">Loading permissions...</Text></View>;
@@ -26,7 +28,8 @@ export default function Barcode() {
   }
   const handleBarcodeScan = ({ type, data }: { type: string, data: string }) => {
     setScanned(true);
-    setCodeStr(data)
+    setCodeStr(data);
+    router.push(`/booking/${encodeURIComponent(data)}`);
   }
   return (
     <SafeAreaView className="bg-black flex-1 flex-col">
@@ -38,7 +41,7 @@ export default function Barcode() {
             style={StyleSheet.absoluteFill}
             facing="back"
             barcodeScannerSettings={{
-              barcodeTypes: ["qr", "ean13", "code128"], 
+              barcodeTypes: ["ean13", "code128"], 
             }}
             onBarcodeScanned={scanned ? undefined : handleBarcodeScan}
           />

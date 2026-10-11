@@ -7,6 +7,8 @@ module.exports = {
       fontFamily: {
         syne: ["Syne_400Regular"],
         "syne-bold": ["Syne_700Bold"],
+        "space-grotesk": ["SpaceGrotesk_400Regular"],
+        "space-grotesk-bold": ["SpaceGrotesk_700Bold"]
       },
     },
   },
